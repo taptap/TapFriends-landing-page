@@ -1,3 +1,11 @@
 body {
+  @apply bg-tapBlue;
   background-image: url('./assets/background.svg');
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#app {
+  @apply h-full;
 }

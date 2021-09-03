@@ -1,0 +1,18 @@
+.card {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1), inset 0px -2px 0px #f2f2f2;
+}
+
+.pop::after {
+  content: '';
+  @apply absolute w-4 h-4 left-[calc(50%-8px)] bottom-[-9px] bg-[#FAFAFA] transform -rotate-45 border-l border-b rounded-bl;
+}
+
+@media (min-height: 648px) {
+  .card {
+    @apply mb-0 min-h-[508px] flex-grow-0;
+  }
+
+  .logo {
+    @apply flex;
+  }
+}
