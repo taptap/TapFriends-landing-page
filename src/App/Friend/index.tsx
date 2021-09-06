@@ -1,10 +1,44 @@
-import styles from './index.module.css';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import gameIcon from 'assets/game_icon.png';
 import { Button } from 'components/Button';
 import { QRCode } from 'components/QRCode';
+import styles from './index.module.css';
+import BrowserHintIcon from './BrowserHintIcon';
+
+function useIsInWechat() {
+  const [flag, setFlag] = useState(false);
+  useLayoutEffect(() => {
+    setFlag(navigator.userAgent.toLowerCase().includes('micromessenger'));
+  }, []);
+  return flag;
+}
+
+function OpenInBrowserHint() {
+  const $container = useRef<HTMLDivElement>(null!);
+  useEffect(() => {
+    $container.current.addEventListener('touchstart', (e) => e.preventDefault());
+  }, []);
+
+  return (
+    <div
+      ref={$container}
+      className="fixed inset-0 bg-[rgba(0,0,0,0.8)] pr-[env(safe-area-inset-right)]"
+    >
+      <div className="relative top-0 right-0">
+        <div className="absolute top-[26px] right-[22px]">
+          <BrowserHintIcon />
+        </div>
+        <div className="absolute top-[120px] right-[98px] text-sm text-white">请使用浏览器打开</div>
+      </div>
+    </div>
+  );
+}
 
 export default function Friend() {
+  const isInWechat = useIsInWechat();
+
   return (
     <div className="flex flex-col h-full mx-auto select-none lg:justify-center">
       <div
@@ -30,6 +64,8 @@ export default function Friend() {
         <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 w-[116px] h-[116px] p-2 bg-white rounded">
           <QRCode src="https://taptap.com" />
         </div>
+
+        {isInWechat && createPortal(<OpenInBrowserHint />, document.body)}
       </div>
     </div>
   );
