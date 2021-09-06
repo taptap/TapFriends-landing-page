@@ -6,13 +6,3 @@
   content: '';
   @apply absolute w-4 h-4 left-[calc(50%-8px)] bottom-[-9px] bg-[#FAFAFA] transform -rotate-45 border-l border-b rounded-bl;
 }
-
-@media (min-height: 648px) {
-  .card {
-    @apply mb-0 min-h-[508px] flex-grow-0;
-  }
-
-  .logo {
-    @apply flex;
-  }
-}

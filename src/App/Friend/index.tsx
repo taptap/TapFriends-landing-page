@@ -1,7 +1,6 @@
 import styles from './index.module.css';
 
 import gameIcon from 'assets/game_icon.png';
-import logo from 'assets/taptap_logo.svg';
 import { Button } from 'components/Button';
 import { QRCode } from 'components/QRCode';
 
@@ -9,7 +8,7 @@ export default function Friend() {
   return (
     <div className="flex flex-col h-full mx-auto select-none lg:justify-center">
       <div
-        className={`${styles.card} relative flex flex-grow flex-col bg-white rounded-2xl p-6 mx-4 mt-8 mb-10 sm:(w-[530px] mx-auto my-3) lg:(w-[343px] h-[528px] max-h-[528px])`}
+        className={`${styles.card} relative flex flex-grow flex-col bg-white rounded-2xl p-6 mx-4 mt-8 mb-10 sm:(w-[530px] mx-auto my-3) lg:w-[343px] max-h-[508px]`}
       >
         <div className="mt-6 sm:mt-0 text-center">
           <img className="inline-block pointer-events-none" src={gameIcon} width={80} height={80} />
@@ -30,12 +29,6 @@ export default function Friend() {
 
         <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 w-[116px] h-[116px] p-2 bg-white rounded">
           <QRCode src="https://taptap.com" />
-        </div>
-      </div>
-
-      <div className={`${styles.logo} hidden flex-grow max-h-[140px]`}>
-        <div className="flex m-auto w-20 h-11 bg-tapBlue">
-          <img className="m-auto" src={logo} />
         </div>
       </div>
     </div>
