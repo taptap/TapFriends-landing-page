@@ -46,8 +46,8 @@ export default function Friend() {
       >
         <div className="mt-6 sm:mt-0 text-center">
           <img className="inline-block pointer-events-none" src={gameIcon} width={80} height={80} />
-          <h1 className="mt-2 font-bold">人类：跌落梦境</h1>
-          <p className="mt-1 text-xs text-[#888]">人类一败涂地独家船新版本</p>
+          <h1 className="mt-2 font-bold">{import.meta.env.VITE_GAME_NAME}</h1>
+          <p className="mt-1 text-xs text-[#888]">{import.meta.env.VITE_GAME_DESC}</p>
         </div>
 
         <div
@@ -61,8 +61,8 @@ export default function Friend() {
 
         <Button className="mt-[34px] sm:mt-6">发送好友申请</Button>
 
-        <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 w-[116px] h-[116px] p-2 bg-white rounded">
-          <QRCode src="https://taptap.com" />
+        <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 p-2 bg-white rounded">
+          <QRCode src={import.meta.env.VITE_GAME_URL} size={100} />
         </div>
 
         {isInWechat && createPortal(<OpenInBrowserHint />, document.body)}
