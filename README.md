@@ -4,12 +4,14 @@
 
 游戏信息保存在 .env 文件中。
 
-| key            | desc       |
-| -------------- | ---------- |
-| VITE_TITLE     | 网页标题   |
-| VITE_GAME_NAME | 游戏名称   |
-| VITE_GAME_DESC | 游戏描述   |
-| VITE_GAME_URL  | 二维码链接 |
+| key               | desc             |
+| ----------------- | ---------------- |
+| VITE_TITLE        | 网页标题         |
+| VITE_GAME_NAME    | 游戏名称         |
+| VITE_GAME_DESC    | 游戏描述         |
+| VITE_GAME_URL     | 二维码链接       |
+| VITE_IOS_LINK     | IOS app link     |
+| VITE_ANDROID_LINK | Android app link |
 
 ## 部署
 

@@ -12,6 +12,7 @@ export default defineConfig({
     alias: {
       assets: path.resolve('./src/assets'),
       components: path.resolve('./src/components'),
+      utils: path.resolve('./src/utils'),
     },
   },
 });
