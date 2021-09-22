@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import gameIcon from 'assets/game_icon.png';
@@ -49,19 +49,33 @@ function useP() {
   return { roleName, ext };
 }
 
+function appendSearchParams(url: string, params: Record<string, string>): string {
+  const [base, search] = url.split('?');
+  const sp = new URLSearchParams(search);
+  Object.entries(params).forEach(([key, value]) => sp.set(key, value));
+  const newSearch = sp.toString();
+  if (newSearch) {
+    return base + '?' + newSearch;
+  }
+  return base;
+}
+
 export default function Friend() {
   const { isIOS, isAndroid, isWechat } = usePlatform();
   const { roleName, ext } = useP();
 
-  const handleClick = () => {
+  const link = useMemo(() => {
+    const { env } = import.meta;
     if (isIOS) {
-      location.href = import.meta.env.VITE_IOS_LINK + (ext ? `?p=${ext}` : '');
-    } else if (isAndroid) {
-      location.href = import.meta.env.VITE_ANDROID_LINK + (ext ? `?p=${ext}` : '');
-    } else {
-      location.href = import.meta.env.VITE_GAME_URL;
+      return ext ? appendSearchParams(env.VITE_IOS_LINK, { ext }) : env.VITE_IOS_LINK;
     }
-  };
+    if (isAndroid) {
+      return ext ? appendSearchParams(env.VITE_ANDROID_LINK, { ext }) : env.VITE_ANDROID_LINK;
+    }
+    return env.VITE_GAME_URL;
+  }, [isIOS, isAndroid, ext]);
+
+  const handleClick = useCallback(() => (location.href = link), [link]);
 
   return (
     <div className="flex flex-col h-full mx-auto select-none lg:justify-center">
