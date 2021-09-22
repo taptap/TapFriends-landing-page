@@ -41,7 +41,6 @@ function useP() {
         const { role_name, ext } = JSON.parse(atob(p));
         setRoleName(role_name ?? 'unknown');
         setExt(ext ?? '');
-        return;
       } catch {}
     }
   }, []);
