@@ -64,14 +64,17 @@ export default function Friend() {
   const { roleName, ext } = useP();
 
   const link = useMemo(() => {
-    const { env } = import.meta;
     if (isIOS) {
-      return ext ? appendSearchParams(env.VITE_IOS_LINK, { ext }) : env.VITE_IOS_LINK;
+      return ext
+        ? appendSearchParams(import.meta.env.VITE_IOS_LINK, { ext })
+        : import.meta.env.VITE_IOS_LINK;
     }
     if (isAndroid) {
-      return ext ? appendSearchParams(env.VITE_ANDROID_LINK, { ext }) : env.VITE_ANDROID_LINK;
+      return ext
+        ? appendSearchParams(import.meta.env.VITE_ANDROID_LINK, { ext })
+        : import.meta.env.VITE_ANDROID_LINK;
     }
-    return env.VITE_GAME_URL;
+    return import.meta.env.VITE_GAME_URL;
   }, [isIOS, isAndroid, ext]);
 
   const handleClick = useCallback(() => (location.href = link), [link]);
