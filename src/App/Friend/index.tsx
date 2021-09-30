@@ -38,7 +38,7 @@ function useP() {
     const p = params.get('p');
     if (p) {
       try {
-        const { role_name, ext } = JSON.parse(atob(p));
+        const { role_name, ext } = JSON.parse(decodeURIComponent(escape(atob(p))));
         setRoleName(role_name ?? 'unknown');
         setExt(ext ?? '');
       } catch {}
