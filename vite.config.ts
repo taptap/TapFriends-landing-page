@@ -13,6 +13,7 @@ export default defineConfig({
       assets: path.resolve('./src/assets'),
       components: path.resolve('./src/components'),
       utils: path.resolve('./src/utils'),
+      '@': path.resolve('./src'),
     },
   },
 });

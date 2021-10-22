@@ -1,46 +1,36 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 
+import config from '@/config';
 import gameIcon from 'assets/game_icon.png';
 import { usePlatform } from 'utils/usePlatform';
 import { Button } from 'components/Button';
 import { QRCode } from 'components/QRCode';
 import styles from './index.module.css';
-import BrowserHintIcon from './BrowserHintIcon';
-
-function OpenInBrowserHint() {
-  const $container = useRef<HTMLDivElement>(null!);
-  useEffect(() => {
-    $container.current.addEventListener('touchstart', (e) => e.preventDefault());
-  }, []);
-
-  return (
-    <div
-      ref={$container}
-      className="fixed inset-0 bg-[rgba(0,0,0,0.8)] pr-[env(safe-area-inset-right)]"
-    >
-      <div className="relative top-0 right-0">
-        <div className="absolute top-[26px] right-[22px]">
-          <BrowserHintIcon />
-        </div>
-        <div className="absolute top-[120px] right-[98px] text-sm text-white">请使用浏览器打开</div>
-      </div>
-    </div>
-  );
-}
+import { OpenInBrowser } from './OpenInBrowser';
 
 function useP() {
-  const [roleName, setRoleName] = useState('unknown');
-  const [ext, setExt] = useState('');
+  const [roleName, setRoleName] = useState<string>();
+  const [ext, setExt] = useState<string>();
 
   useLayoutEffect(() => {
     const params = new URLSearchParams(location.search);
     const p = params.get('p');
     if (p) {
       try {
-        const { role_name, ext } = JSON.parse(decodeURIComponent(escape(atob(p))));
-        setRoleName(role_name ?? 'unknown');
-        setExt(ext ?? '');
+        const { role_name, ext, lang } = JSON.parse(decodeURIComponent(escape(atob(p))));
+        if (typeof role_name === 'string') {
+          setRoleName(role_name);
+        }
+        if (typeof ext === 'string') {
+          setExt(ext);
+        }
+        if (typeof lang === 'string' && !config.language) {
+          // zh_CH -> zh-CN
+          i18n.changeLanguage(lang.replace(/_/g, '-'));
+        }
       } catch {}
     }
   }, []);
@@ -60,21 +50,31 @@ function appendSearchParams(url: string, params: Record<string, string>): string
 }
 
 export default function Friend() {
+  const { t } = useTranslation();
   const { isIOS, isAndroid, isWechat } = usePlatform();
   const { roleName, ext } = useP();
 
+  const gameName = useMemo(() => t('gameInfo.name') || config.game.name, [t]);
+  const gameDesc = useMemo(() => t('gameInfo.description') || config.game.description, [t]);
+
+  const displayRoleName = useMemo(() => {
+    if (roleName) {
+      return `“${roleName}”`;
+    }
+    if (gameName) {
+      return `${gameName} ${t('friend.anonymousRoleName')}`;
+    }
+    return t('friend.anonymousRoleName');
+  }, [roleName, gameName, t]);
+
   const link = useMemo(() => {
     if (isIOS) {
-      return ext
-        ? appendSearchParams(import.meta.env.VITE_IOS_LINK, { ext })
-        : import.meta.env.VITE_IOS_LINK;
+      return ext ? appendSearchParams(config.game.iosLink, { ext }) : config.game.iosLink;
     }
     if (isAndroid) {
-      return ext
-        ? appendSearchParams(import.meta.env.VITE_ANDROID_LINK, { ext })
-        : import.meta.env.VITE_ANDROID_LINK;
+      return ext ? appendSearchParams(config.game.androidLink, { ext }) : config.game.androidLink;
     }
-    return import.meta.env.VITE_GAME_URL;
+    return config.game.url;
   }, [isIOS, isAndroid, ext]);
 
   const handleClick = useCallback(() => (location.href = link), [link]);
@@ -86,28 +86,28 @@ export default function Friend() {
       >
         <div className="mt-6 sm:mt-0 text-center">
           <img className="inline-block pointer-events-none" src={gameIcon} width={80} height={80} />
-          <h1 className="mt-2 font-bold">{import.meta.env.VITE_GAME_NAME}</h1>
-          <p className="mt-1 text-xs text-[#888]">{import.meta.env.VITE_GAME_DESC}</p>
+          <h1 className="mt-2 font-bold">{gameName}</h1>
+          <p className="mt-1 text-xs text-[#888]">{gameDesc}</p>
         </div>
 
         <div
           className={`${styles.pop} flex flex-grow relative mt-[30px] sm:mt-4 bg-[#FAFAFA] border border-[rgba(0,0,0,0.08)] rounded-xl`}
         >
           <div className="m-auto p-2 text-center">
-            <div className="text-[#00B9C8]">”{roleName}“</div>
-            <div className="mt-1 text-xl font-bold">邀请你成为游戏好友</div>
+            <div className="text-[#00B9C8]">{displayRoleName}</div>
+            <div className="mt-1 text-xl font-bold">{t('friend.invitationText')}</div>
           </div>
         </div>
 
         <Button className="mt-[34px] sm:mt-6" onClick={handleClick}>
-          发送好友申请
+          {t('friend.sendInvitation')}
         </Button>
 
         <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 p-2 bg-white rounded">
-          <QRCode src={import.meta.env.VITE_GAME_URL} size={100} />
+          <QRCode src={config.game.url} size={100} />
         </div>
 
-        {isWechat && createPortal(<OpenInBrowserHint />, document.body)}
+        {isWechat && createPortal(<OpenInBrowser />, document.body)}
       </div>
     </div>
   );

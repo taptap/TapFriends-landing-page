@@ -4,14 +4,20 @@
 
 游戏信息保存在 .env 文件中。
 
-| key               | desc             |
-| ----------------- | ---------------- |
-| VITE_TITLE        | 网页标题         |
-| VITE_GAME_NAME    | 游戏名称         |
-| VITE_GAME_DESC    | 游戏描述         |
-| VITE_GAME_URL     | 二维码链接       |
-| VITE_IOS_LINK     | IOS app link     |
-| VITE_ANDROID_LINK | Android app link |
+| key               | desc             | i18n key               |
+| ----------------- | ---------------- | ---------------------- |
+| VITE_TITLE        | 网页标题         | `document.title`       |
+| VITE_GAME_NAME    | 游戏名称         | `gameInfo.name`        |
+| VITE_GAME_DESC    | 游戏描述         | `gameInfo.description` |
+| VITE_GAME_URL     | 二维码链接       | -                      |
+| VITE_IOS_LINK     | IOS app link     | -                      |
+| VITE_ANDROID_LINK | Android app link | -                      |
+
+### 多语言
+
+可为支持 i18n key 的游戏信息添加多语言配置，在指定语言环境中替换 .env 文件中的值。
+
+多语言配置保存在 `src/i18n/locales/{locale}.json` 中。
 
 ## 部署
 
@@ -31,7 +37,6 @@ cd dist
 
 [install]: https://developer.taptap.com/docs/sdk/engine/guide/cli/#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7
 [login]: https://developer.taptap.com/docs/sdk/engine/guide/cli/#安装命令行工具
-
 
 关联应用：
 

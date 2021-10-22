@@ -1,0 +1,15 @@
+{
+  "document": {
+    "title": "Human: Fall Flat"
+  },
+  "gameInfo": {
+    "name": "Human: Fall Flat",
+    "description": "Human: Fall Flat is a hilarious, light-hearted physics platformer set in floating dreamscapes that can be played solo or with up to 4 players."
+  },
+  "friend": {
+    "anonymousRoleName": "Player",
+    "invitationText": "wants to be your friend in this game",
+    "sendInvitation": "Send Invitation"
+  },
+  "openInBrowser": "Open in browser"
+}
