@@ -1,15 +1,11 @@
-import { useLayoutEffect, useState } from 'react';
+import { useRef } from 'react';
 
 export function usePlatform() {
-  const [isIOS, setIsIOS] = useState(false);
-  const [isAndroid, setIsAndroid] = useState(false);
-  const [isWechat, setIsWechat] = useState(false);
+  const $platform = useRef({
+    isIOS: /iPhone|iPad|iPod/i.test(navigator.userAgent),
+    isAndroid: /Android/i.test(navigator.userAgent),
+    isWechat: /micromessenger/i.test(navigator.userAgent),
+  });
 
-  useLayoutEffect(() => {
-    setIsIOS(/iPhone|iPad|iPod/i.test(navigator.userAgent));
-    setIsAndroid(/Android/i.test(navigator.userAgent));
-    setIsWechat(/micromessenger/i.test(navigator.userAgent));
-  }, []);
-
-  return { isIOS, isAndroid, isWechat };
+  return $platform.current;
 }
