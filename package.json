@@ -5,7 +5,8 @@
     "prepare": "husky install",
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "start": "serve"
   },
   "dependencies": {
     "classnames": "^2.3.1",
@@ -13,7 +14,8 @@
     "qrcode": "^1.4.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-i18next": "^11.12.0"
+    "react-i18next": "^11.12.0",
+    "serve": "^12.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^3.0.0",
