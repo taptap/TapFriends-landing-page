@@ -1,11 +1,14 @@
 export default {
-  title: import.meta.env.VITE_TITLE,
+  title: '__DOCUMENT_TITLE',
   game: {
-    name: import.meta.env.VITE_GAME_NAME,
-    description: import.meta.env.VITE_GAME_DESC,
-    url: import.meta.env.VITE_GAME_URL,
-    iosLink: import.meta.env.VITE_IOS_LINK,
-    androidLink: import.meta.env.VITE_ANDROID_LINK,
+    name: '__GAME_NAME',
+    icon: '__GAME_ICON',
+    description: '__GAME_DESC',
+    url: '__GAME_URL',
+    iosLink: '__GAME_IOS_LINK',
+    iosStore: '__GAME_IOS_STORE',
+    androidLink: '__GAME_ANDROID_LINK',
+    androidStore: '__GAME_ANDROID_STORE',
   },
   language: navigator?.language,
 };

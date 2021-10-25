@@ -4,7 +4,6 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 import config from '@/config';
-import gameIcon from 'assets/game_icon.png';
 import { usePlatform } from 'utils/usePlatform';
 import { Button } from 'components/Button';
 import { QRCode } from 'components/QRCode';
@@ -54,8 +53,8 @@ export default function Friend() {
   const { isIOS, isAndroid, isWechat } = usePlatform();
   const { roleName, ext } = useP();
 
-  const gameName = useMemo(() => t('gameInfo.name') || config.game.name, [t]);
-  const gameDesc = useMemo(() => t('gameInfo.description') || config.game.description, [t]);
+  const gameName = useMemo(() => t('game.name') || config.game.name, [t]);
+  const gameDesc = useMemo(() => t('game.description') || config.game.description, [t]);
 
   const displayRoleName = useMemo(() => {
     if (roleName) {
@@ -67,17 +66,30 @@ export default function Friend() {
     return t('friend.anonymousRoleName');
   }, [roleName, gameName, t]);
 
-  const link = useMemo(() => {
+  const [link, store] = useMemo(() => {
     if (isIOS) {
-      return ext ? appendSearchParams(config.game.iosLink, { ext }) : config.game.iosLink;
+      return [
+        ext ? appendSearchParams(config.game.iosLink, { ext }) : config.game.iosLink,
+        config.game.iosStore,
+      ];
     }
     if (isAndroid) {
-      return ext ? appendSearchParams(config.game.androidLink, { ext }) : config.game.androidLink;
+      return [
+        ext ? appendSearchParams(config.game.androidLink, { ext }) : config.game.androidLink,
+        config.game.androidStore,
+      ];
     }
-    return config.game.url;
+    return [config.game.url, ''];
   }, [isIOS, isAndroid, ext]);
 
-  const handleClick = useCallback(() => (location.href = link), [link]);
+  const handleClick = useCallback(() => {
+    location.href = link;
+    if (store) {
+      setTimeout(() => {
+        location.href = store;
+      }, 500);
+    }
+  }, [link, store]);
 
   return (
     <div className="flex flex-col h-full mx-auto select-none lg:justify-center">
@@ -85,7 +97,12 @@ export default function Friend() {
         className={`${styles.card} relative flex flex-grow flex-col bg-white rounded-2xl p-6 mx-4 mt-8 mb-10 sm:(w-[530px] mx-auto my-3) lg:w-[343px] max-h-[508px]`}
       >
         <div className="mt-6 sm:mt-0 text-center">
-          <img className="inline-block pointer-events-none" src={gameIcon} width={80} height={80} />
+          <img
+            className="inline-block pointer-events-none"
+            src={config.game.icon}
+            width={80}
+            height={80}
+          />
           <h1 className="mt-2 font-bold">{gameName}</h1>
           <p className="mt-1 text-xs text-[#888]">{gameDesc}</p>
         </div>
@@ -103,9 +120,11 @@ export default function Friend() {
           {t('friend.sendInvitation')}
         </Button>
 
-        <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 p-2 bg-white rounded">
-          <QRCode src={config.game.url} size={100} />
-        </div>
+        {config.game.url && (
+          <div className="hidden lg:block absolute left-full bottom-0 transform translate-x-10 p-2 bg-white rounded">
+            <QRCode src={config.game.url} size={100} />
+          </div>
+        )}
 
         {isWechat && createPortal(<OpenInBrowser />, document.body)}
       </div>

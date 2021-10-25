@@ -4,14 +4,19 @@
 
 游戏信息保存在 .env 文件中。
 
-| key               | desc             | i18n key               |
-| ----------------- | ---------------- | ---------------------- |
-| VITE_TITLE        | 网页标题         | `document.title`       |
-| VITE_GAME_NAME    | 游戏名称         | `gameInfo.name`        |
-| VITE_GAME_DESC    | 游戏描述         | `gameInfo.description` |
-| VITE_GAME_URL     | 二维码链接       | -                      |
-| VITE_IOS_LINK     | IOS app link     | -                      |
-| VITE_ANDROID_LINK | Android app link | -                      |
+| key                | desc               | i18n key           |
+| ------------------ | ------------------ | ------------------ |
+| DOCUMENT_TITLE     | 网页标题           | `document.title`   |
+| GAME_ICON          | 游戏图标           | -                  |
+| GAME_NAME          | 游戏名称           | `game.name`        |
+| GAME_DESC          | 游戏描述           | `game.description` |
+| GAME_URL           | 二维码链接         | -                  |
+| GAME_IOS_LINK      | IOS app link       | -                  |
+| GAME_IOS_STORE     | IOS store link     | -                  |
+| GAME_ANDROID_LINK  | Android app link   | -                  |
+| GAME_ANDROID_STORE | Android store link | -                  |
+
+游戏图标保存在 public/game_icon.png 中。
 
 ### 多语言
 
