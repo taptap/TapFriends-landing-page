@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "start": "serve"
+    "start": "serve -l $LEANCLOUD_APP_PORT"
   },
   "engines": {
     "node": "^14"
