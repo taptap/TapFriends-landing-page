@@ -1,0 +1,15 @@
+{
+  "document": {
+    "title": ""
+  },
+  "game": {
+    "name": "",
+    "description": ""
+  },
+  "friend": {
+    "anonymousRoleName": "玩家",
+    "invitationText": "邀请你成为游戏好友",
+    "sendInvitation": "发送好友申请"
+  },
+  "openInBrowser": "请使用浏览器打开"
+}
