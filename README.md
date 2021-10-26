@@ -26,6 +26,8 @@
 
 ## 部署
 
+### 通过命令行工具部署
+
 构建
 
 ```sh
@@ -59,3 +61,13 @@ tds deploy
 
 [deploy]: https://developer.taptap.com/docs/sdk/engine/guide/cli/#%E9%83%A8%E7%BD%B2
 [publish]: https://developer.taptap.com/docs/sdk/engine/guide/cli/#%E5%8F%91%E5%B8%83%E5%88%B0%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83
+
+### 通过 Git 部署
+
+1. 在控制台 **云引擎** > **WEB** > **设置** > **自定义环境变量** 中配置[游戏信息](#修改游戏信息)，云引擎中的环境变量会覆盖 .env 文件中的配置。
+
+2. 在 **部署** > **Git 部署** 中配置本项目的仓库地址。
+
+3. 选择目标环境，点击部署。
+
+修改环境变量后需要重新部署。
