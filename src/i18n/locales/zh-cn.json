@@ -8,8 +8,10 @@
   },
   "friend": {
     "anonymousRoleName": "玩家",
-    "invitationText": "邀请你成为游戏好友",
-    "sendInvitation": "发送好友申请"
+    "invitToBeFriend": "邀请你成为游戏好友",
+    "sendFriendInvitation": "发送好友申请",
+    "invitToFollow": "邀请你关注 Ta",
+    "follow": "立即关注 Ta"
   },
   "openInBrowser": "请使用浏览器打开"
 }

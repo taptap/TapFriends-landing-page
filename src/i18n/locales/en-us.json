@@ -8,8 +8,10 @@
   },
   "friend": {
     "anonymousRoleName": "Player",
-    "invitationText": "wants to be your friend in this game",
-    "sendInvitation": "Send Invitation"
+    "invitToBeFriend": "wants to be your friend in this game",
+    "sendFriendInvitation": "Send Invitation",
+    "invitToFollow": "invites you to follow him/her",
+    "follow": "Follow"
   },
   "openInBrowser": "Open in browser"
 }

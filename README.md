@@ -2,19 +2,20 @@
 
 ## 修改游戏信息
 
-游戏信息保存在 .env 文件中。
+游戏信息保存在 .env 文件中，你可以在云引擎的设置页面覆盖这些环境变量，然后重新部署以生效。
 
-| key                | desc               | i18n key           |
-| ------------------ | ------------------ | ------------------ |
-| DOCUMENT_TITLE     | 网页标题           | `document.title`   |
-| GAME_ICON          | 游戏图标           | -                  |
-| GAME_NAME          | 游戏名称           | `game.name`        |
-| GAME_DESC          | 游戏描述           | `game.description` |
-| GAME_URL           | 二维码链接         | -                  |
-| GAME_IOS_LINK      | IOS app link       | -                  |
-| GAME_IOS_STORE     | IOS store link     | -                  |
-| GAME_ANDROID_LINK  | Android app link   | -                  |
-| GAME_ANDROID_STORE | Android store link | -                  |
+| key                | desc                                           | i18n key           |
+| ------------------ | ---------------------------------------------- | ------------------ |
+| DOCUMENT_TITLE     | 网页标题                                       | `document.title`   |
+| GAME_ICON          | 游戏图标                                       | -                  |
+| GAME_NAME          | 游戏名称                                       | `game.name`        |
+| GAME_DESC          | 游戏描述                                       | `game.description` |
+| GAME_URL           | 二维码链接                                     | -                  |
+| GAME_IOS_LINK      | IOS app link                                   | -                  |
+| GAME_IOS_STORE     | IOS store link                                 | -                  |
+| GAME_ANDROID_LINK  | Android app link                               | -                  |
+| GAME_ANDROID_STORE | Android store link                             | -                  |
+| INVITE_TYPE        | 好友类型，默认为 `friend`，可以修改为 `follow` | -                  |
 
 游戏图标保存在 public/game_icon.png 中。
 
