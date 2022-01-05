@@ -112,12 +112,16 @@ export default function Friend() {
         >
           <div className="m-auto p-2 text-center">
             <div className="text-[#00B9C8]">{displayRoleName}</div>
-            <div className="mt-1 text-xl font-bold">{t('friend.invitationText')}</div>
+            <div className="mt-1 text-xl font-bold">
+              {config.inviteType === 'follow'
+                ? t('friend.inviteToFollow')
+                : t('friend.inviteToBeFriend')}
+            </div>
           </div>
         </div>
 
         <Button className="mt-[34px] sm:mt-6" onClick={handleClick}>
-          {t('friend.sendInvitation')}
+          {config.inviteType === 'follow' ? t('friend.follow') : t('friend.sendFriendInvitation')}
         </Button>
 
         {config.game.url && (

@@ -10,5 +10,6 @@ export default {
     androidLink: '__GAME_ANDROID_LINK',
     androidStore: '__GAME_ANDROID_STORE',
   },
+  inviteType: '__INVITE_TYPE',
   language: navigator?.language,
 };

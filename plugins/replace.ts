@@ -13,4 +13,5 @@ export default replace({
   __GAME_IOS_STORE: process.env.GAME_IOS_STORE ?? '',
   __GAME_ANDROID_LINK: process.env.GAME_ANDROID_LINK ?? '',
   __GAME_ANDROID_STORE: process.env.GAME_ANDROID_STORE ?? '',
+  __INVITE_TYPE: process.env.INVITE_TYPE ?? 'friend',
 });
