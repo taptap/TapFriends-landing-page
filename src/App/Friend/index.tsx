@@ -114,8 +114,8 @@ export default function Friend() {
             <div className="text-[#00B9C8]">{displayRoleName}</div>
             <div className="mt-1 text-xl font-bold">
               {config.inviteType === 'follow'
-                ? t('friend.invitToFollow')
-                : t('friend.invitToBeFriend')}
+                ? t('friend.inviteToFollow')
+                : t('friend.inviteToBeFriend')}
             </div>
           </div>
         </div>
