@@ -10,16 +10,6 @@ import { QRCode } from 'components/QRCode';
 import styles from './index.module.css';
 import { OpenInBrowser } from './OpenInBrowser';
 
-function useSearchParams() {
-  return useMemo(() => {
-    const searchParams: Record<string, string> = {};
-    new URLSearchParams(location.search).forEach((value, key) => {
-      searchParams[key] = value;
-    });
-    return searchParams;
-  }, []);
-}
-
 function parseSearchParamP(value: string) {
   const p: {
     role_name?: string;
@@ -44,10 +34,16 @@ function parseSearchParamP(value: string) {
   return p;
 }
 
-function generateFriendLink(baseUrl: string, searchParams: Record<string, string | undefined>) {
+function generateFriendLink(baseUrl: string, searchParams: URLSearchParams, ext?: string) {
   const url = new URL(baseUrl);
-  Object.entries(searchParams).forEach(([key, value]) => {
-    if (value !== undefined) {
+  let pIsSetted = false;
+  searchParams.forEach((value, key) => {
+    if (key === 'p') {
+      if (!pIsSetted && ext !== undefined) {
+        url.searchParams.append('ext', ext);
+        pIsSetted = true;
+      }
+    } else {
       url.searchParams.append(key, value);
     }
   });
@@ -57,15 +53,19 @@ function generateFriendLink(baseUrl: string, searchParams: Record<string, string
 export default function Friend() {
   const { t } = useTranslation();
   const { isIOS, isAndroid, isWechat } = usePlatform();
-  const { p, ...searchParams } = useSearchParams();
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
   const [roleName, ext] = useMemo(() => {
-    const { role_name, ext, lang } = parseSearchParamP(p);
-    if (lang && !config.language) {
-      i18n.changeLanguage(lang);
+    const p = searchParams.get('p');
+    if (p) {
+      const { role_name, ext, lang } = parseSearchParamP(p);
+      if (lang && !config.language) {
+        i18n.changeLanguage(lang);
+      }
+      return [role_name, ext];
     }
-    return [role_name, ext];
-  }, [p]);
+    return [undefined, undefined];
+  }, [searchParams]);
 
   const { gameName, gameDesc } = useMemo(
     () => ({
@@ -87,14 +87,11 @@ export default function Friend() {
 
   const [link, store] = useMemo(() => {
     if (isIOS) {
-      return [
-        generateFriendLink(config.game.iosLink, { ext, ...searchParams }),
-        config.game.iosStore,
-      ];
+      return [generateFriendLink(config.game.iosLink, searchParams, ext), config.game.iosStore];
     }
     if (isAndroid) {
       return [
-        generateFriendLink(config.game.androidLink, { ext, ...searchParams }),
+        generateFriendLink(config.game.androidLink, searchParams, ext),
         config.game.androidStore,
       ];
     }
