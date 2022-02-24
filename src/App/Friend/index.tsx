@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -10,51 +10,70 @@ import { QRCode } from 'components/QRCode';
 import styles from './index.module.css';
 import { OpenInBrowser } from './OpenInBrowser';
 
-function useP() {
-  const [roleName, setRoleName] = useState<string>();
-  const [ext, setExt] = useState<string>();
-
-  useLayoutEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const p = params.get('p');
-    if (p) {
-      try {
-        const { role_name, ext, lang } = JSON.parse(decodeURIComponent(escape(atob(p))));
-        if (typeof role_name === 'string') {
-          setRoleName(role_name);
-        }
-        if (typeof ext === 'string') {
-          setExt(ext);
-        }
-        if (typeof lang === 'string' && !config.language) {
-          // zh_CH -> zh-CN
-          i18n.changeLanguage(lang.replace(/_/g, '-'));
-        }
-      } catch {}
-    }
+function useSearchParams() {
+  return useMemo(() => {
+    const searchParams: Record<string, string> = {};
+    new URLSearchParams(location.search).forEach((value, key) => {
+      searchParams[key] = value;
+    });
+    return searchParams;
   }, []);
-
-  return { roleName, ext };
 }
 
-function appendSearchParams(url: string, params: Record<string, string>): string {
-  const [base, search] = url.split('?');
-  const sp = new URLSearchParams(search);
-  Object.entries(params).forEach(([key, value]) => sp.set(key, value));
-  const newSearch = sp.toString();
-  if (newSearch) {
-    return base + '?' + newSearch;
-  }
-  return base;
+function parseSearchParamP(value: string) {
+  const p: {
+    role_name?: string;
+    ext?: string;
+    lang?: string;
+  } = {};
+
+  try {
+    const { role_name, ext, lang } = JSON.parse(decodeURIComponent(escape(atob(value))));
+    if (typeof role_name === 'string') {
+      p.role_name = role_name;
+    }
+    if (typeof ext === 'string') {
+      p.ext = ext;
+    }
+    if (typeof lang === 'string') {
+      // zh_CN -> zh-CN
+      p.lang = lang.replace(/_/g, '-');
+    }
+  } catch {} // ignore
+
+  return p;
+}
+
+function generateFriendLink(baseUrl: string, searchParams: Record<string, string | undefined>) {
+  const url = new URL(baseUrl);
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (value !== undefined) {
+      url.searchParams.append(key, value);
+    }
+  });
+  return url.href;
 }
 
 export default function Friend() {
   const { t } = useTranslation();
   const { isIOS, isAndroid, isWechat } = usePlatform();
-  const { roleName, ext } = useP();
+  const { p, ...searchParams } = useSearchParams();
 
-  const gameName = useMemo(() => t('game.name') || config.game.name, [t]);
-  const gameDesc = useMemo(() => t('game.description') || config.game.description, [t]);
+  const [roleName, ext] = useMemo(() => {
+    const { role_name, ext, lang } = parseSearchParamP(p);
+    if (lang && !config.language) {
+      i18n.changeLanguage(lang);
+    }
+    return [role_name, ext];
+  }, [p]);
+
+  const { gameName, gameDesc } = useMemo(
+    () => ({
+      gameName: t('game.name') || config.game.name,
+      gameDesc: t('game.description') || config.game.description,
+    }),
+    [t]
+  );
 
   const displayRoleName = useMemo(() => {
     if (roleName) {
@@ -69,18 +88,18 @@ export default function Friend() {
   const [link, store] = useMemo(() => {
     if (isIOS) {
       return [
-        ext ? appendSearchParams(config.game.iosLink, { ext }) : config.game.iosLink,
+        generateFriendLink(config.game.iosLink, { ext, ...searchParams }),
         config.game.iosStore,
       ];
     }
     if (isAndroid) {
       return [
-        ext ? appendSearchParams(config.game.androidLink, { ext }) : config.game.androidLink,
+        generateFriendLink(config.game.androidLink, { ext, ...searchParams }),
         config.game.androidStore,
       ];
     }
     return [config.game.url, ''];
-  }, [isIOS, isAndroid, ext]);
+  }, [isIOS, isAndroid, ext, searchParams]);
 
   const handleClick = useCallback(() => {
     location.href = link;
