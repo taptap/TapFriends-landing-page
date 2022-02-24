@@ -9,7 +9,7 @@
     "start": "serve -l $LEANCLOUD_APP_PORT"
   },
   "engines": {
-    "node": "^14"
+    "node": "^14 || ^16"
   },
   "dependencies": {
     "classnames": "^2.3.1",
