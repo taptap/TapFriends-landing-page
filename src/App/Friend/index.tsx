@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { decode as decodeBase64 } from 'js-base64';
 
 import config from '@/config';
 import { usePlatform } from 'utils/usePlatform';
@@ -18,7 +19,7 @@ function parseSearchParamP(value: string) {
   } = {};
 
   try {
-    const { role_name, ext, lang } = JSON.parse(decodeURIComponent(escape(atob(value))));
+    const { role_name, ext, lang } = JSON.parse(decodeBase64(value));
     if (typeof role_name === 'string') {
       p.role_name = role_name;
     }
