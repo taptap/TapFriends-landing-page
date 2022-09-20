@@ -112,7 +112,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async (ctx)
         name: gameName,
         description: t('game.description') || e('GAME_DESC'),
         url: gameUrl,
-        image: e('GAME_IMAGE'),
+        image: t('game.image') || e('GAME_IMAGE'),
       },
       roleName: roleName
         ? `“${roleName}”`
