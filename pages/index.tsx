@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async (ctx)
 
   return {
     props: {
-      documentTitle: env.DOCUMENT_TITLE,
+      documentTitle: e('DOCUMENT_TITLE'),
       game: {
         icon: e('GAME_ICON'),
         name: gameName,
@@ -155,6 +155,7 @@ function parseP(value?: string | string[]) {
         ext = p.ext;
       }
       if (typeof p.lang === 'string') {
+        // zh_CN -> zh-CN
         lang = p.lang.replaceAll('_', '-');
       }
     } catch {} // ignore
