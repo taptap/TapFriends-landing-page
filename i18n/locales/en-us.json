@@ -1,0 +1,18 @@
+{
+  "document": {
+    "title": ""
+  },
+  "game": {
+    "name": "",
+    "description": "",
+    "image": ""
+  },
+  "friend": {
+    "anonymousRoleName": "Player",
+    "inviteToBeFriend": "wants to be your friend in this game",
+    "sendFriendInvitation": "Send Invitation",
+    "inviteToFollow": "invites you to follow him/her",
+    "follow": "Follow"
+  },
+  "openInBrowser": "Open in browser"
+}

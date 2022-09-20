@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#__next {
+  @apply h-full;
+}
+
+html {
+  background-color: #15c5ce;
+}
+
+body {
+  background-image: url('/background.svg');
+}
