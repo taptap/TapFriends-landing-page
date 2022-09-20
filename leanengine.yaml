@@ -1,3 +1,2 @@
-exposeEnvironmentsOnBuild: true
 build:
   - npm run build
