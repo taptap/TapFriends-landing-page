@@ -4,7 +4,7 @@ export default defineConfig({
   theme: {
     extend: {
       colors: {
-        tapBlue: '#15C5CE',
+        tapBlue: '#00D9C5',
       },
     },
   },
