@@ -12,7 +12,7 @@ export function QRCode({ src, size }: QRCodeProps) {
     rqcode.toCanvas($canvas.current, src, {
       margin: 0,
       color: {
-        dark: '#15C5CE',
+        dark: '#00D9C5',
       },
       width: size,
     });
