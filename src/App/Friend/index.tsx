@@ -128,7 +128,7 @@ export default function Friend() {
           className={`${styles.pop} flex flex-grow relative mt-[30px] sm:mt-4 bg-[#FAFAFA] border border-[rgba(0,0,0,0.08)] rounded-xl`}
         >
           <div className="m-auto p-2 text-center">
-            <div className="text-tapBlue">{displayRoleName}</div>
+            <div className="text-tapBlue font-bold">{displayRoleName}</div>
             <div className="mt-1 text-xl font-bold">
               {config.inviteType === 'follow'
                 ? t('friend.inviteToFollow')
